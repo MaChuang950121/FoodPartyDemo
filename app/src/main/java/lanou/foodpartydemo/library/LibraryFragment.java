@@ -82,6 +82,11 @@ public class LibraryFragment extends BaseFragment {
     }
 
     @Override
+    protected void refresh() {
+
+    }
+
+    @Override
     protected void initView() {
         gridViewCg = bindView(R.id.foodencylope_class);
         gridViewBr = bindView(R.id.foodencylope_brand);

@@ -2,8 +2,10 @@ package lanou.foodpartydemo.homepage;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.StaggeredGridLayoutManager;
+import android.util.Log;
 
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
@@ -24,6 +26,9 @@ public class FirstPageFragment extends BaseFragment {
     private Context context;
     private RecyclerView recyclerView;
     private ArrayList<FirstPageBean.FeedsBean> arrayList;
+    private int page = 2;
+    private SwipeRefreshLayout refreshLayout;
+    private FirstPageAdapter adapter;
 
     @Override
     public void onAttach(Context context) {
@@ -38,17 +43,20 @@ public class FirstPageFragment extends BaseFragment {
 
     @Override
     protected void initData() {
-        GsonRequest<FirstPageBean> gsonRequest = new GsonRequest<FirstPageBean>(FirstPageBean.class,
+        adapter = new FirstPageAdapter(context);
+
+        final GsonRequest<FirstPageBean> gsonRequest = new GsonRequest<FirstPageBean>(FirstPageBean.class,
                 UrlValues.FIRST_PAGE, new Response.Listener<FirstPageBean>() {
+
+
+
             @Override
             public void onResponse(FirstPageBean response) {
                 arrayList = (ArrayList<FirstPageBean.FeedsBean>) response.getFeeds();
-                FirstPageAdapter adapter = new FirstPageAdapter(context);
+
                 adapter.setArrayList(arrayList);
                 recyclerView.setAdapter(adapter);
-                StaggeredGridLayoutManager manager =
-                        new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-                recyclerView.setLayoutManager(manager);
+
 
             }
         }, new Response.ErrorListener() {
@@ -58,6 +66,37 @@ public class FirstPageFragment extends BaseFragment {
             }
         });
         VolleySingle.getVolleySingle().addRequest(gsonRequest);
+        StaggeredGridLayoutManager manager =  new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.addOnScrollListener(new EndLessOnScrollListener(manager) {
+            @Override
+            protected void onLoadMore(int curentPage) {
+                Log.d("FirstPageFragment", "11111");
+                GsonRequest<FirstPageBean> gsonRequest1 =
+                        new GsonRequest<FirstPageBean>(FirstPageBean.class,
+                                "http://food.boohee.com/fb/v1/feeds/category_feed?page=" + page + "&category=1&per=10",
+                                new Response.Listener<FirstPageBean>() {
+                                    @Override
+                                    public void onResponse(FirstPageBean response) {
+                                        arrayList = (ArrayList<FirstPageBean.FeedsBean>) response.getFeeds();
+                                        adapter.setArrayList(arrayList);
+                                        adapter.notifyDataSetChanged();
+
+
+                                    }
+                                }, new Response.ErrorListener() {
+                            @Override
+                            public void onErrorResponse(VolleyError error) {
+
+                            }
+                        });
+                VolleySingle.getVolleySingle().addRequest(gsonRequest1);
+                page = page + 1;
+                Log.d("FirstPageFragment", "page:" + page);
+            }
+        });
+
+
     }
 
     @Override
@@ -66,8 +105,46 @@ public class FirstPageFragment extends BaseFragment {
     }
 
     @Override
+    protected void refresh() {
+
+//        recyclerView.addOnScrollListener(new EndLessOnScrollListener(manager) {
+//            FirstPageAdapter adapter1 = new FirstPageAdapter(context);
+//            @Override
+//            protected void onLoadMore(int curentPage) {
+//                Log.d("FirstPageFragment", "fdsjlfkj");
+//                GsonRequest<FirstPageBean> gsonRequest1 = new GsonRequest<FirstPageBean>(FirstPageBean.class,
+//                        "http://food.boohee.com/fb/v1/feeds/category_feed?page=" +page+ "&category=1&per=10",
+//                        new Response.Listener<FirstPageBean>() {
+//                            @Override
+//                            public void onResponse(FirstPageBean response) {
+//                                ArrayList<FirstPageBean.FeedsBean> arrayList1 =
+//                                        (ArrayList<FirstPageBean.FeedsBean>) response.getFeeds();
+//                                Log.d("FirstPageFragment", "arrayList1:" + arrayList1);
+//
+//                                adapter1.setArrayList(arrayList1);
+//                                recyclerView.setAdapter(adapter1);
+//                               // StaggeredGridLayoutManager manager2 =
+//                                      //  new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+//                                recyclerView.setLayoutManager(manager);
+//
+//                            }
+//                        }, new Response.ErrorListener() {
+//                    @Override
+//                    public void onErrorResponse(VolleyError error) {
+//
+//                    }
+//                });
+//                VolleySingle.getVolleySingle().addRequest(gsonRequest1);
+//                page++;
+//                adapter1.notifyDataSetChanged();
+//            }
+//        });
+    }
+
+    @Override
     protected void initView() {
         recyclerView = bindView(R.id.rv_first_page);
+        refreshLayout = (SwipeRefreshLayout) recyclerView.findViewById(R.id.refreshLayout);
     }
 
     @Override

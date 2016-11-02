@@ -28,6 +28,7 @@ public class FirstPageAdapter extends RecyclerView.Adapter<FirstPageAdapter.MyVi
 
     public void setArrayList(ArrayList<FirstPageBean.FeedsBean> arrayList) {
         this.arrayList = arrayList;
+        notifyDataSetChanged();
     }
 
     @Override
@@ -42,7 +43,7 @@ public class FirstPageAdapter extends RecyclerView.Adapter<FirstPageAdapter.MyVi
         VolleySingle.getVolleySingle().getImage(arrayList.get(position).getCard_image(),holder.cardImage);
         holder.title.setText(arrayList.get(position).getTitle());
         holder.description.setText(arrayList.get(position).getDescription());
-        VolleySingle.getVolleySingle().getImage(arrayList.get(position).getPublisher_avatar(),holder.publisherIamge);
+        //VolleySingle.getVolleySingle().getImage(arrayList.get(position).getPublisher_avatar(),holder.publisherIamge);
         holder.publisher.setText(arrayList.get(position).getPublisher());
         holder.like.setText(String.valueOf(arrayList.get(position).getLike_ct()));
     }

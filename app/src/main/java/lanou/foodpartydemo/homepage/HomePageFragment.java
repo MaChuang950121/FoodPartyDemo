@@ -42,6 +42,11 @@ public class HomePageFragment extends BaseFragment {
     }
 
     @Override
+    protected void refresh() {
+
+    }
+
+    @Override
     protected void initView() {
         tabLayout = bindView(R.id.tb_home_page);
         viewPager = bindView(R.id.vp_home_page);
