@@ -81,10 +81,8 @@ public class LibraryFragment extends BaseFragment {
 
     }
 
-    @Override
-    protected void refresh() {
 
-    }
+
 
     @Override
     protected void initView() {

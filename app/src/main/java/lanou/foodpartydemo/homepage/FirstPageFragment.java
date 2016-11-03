@@ -10,7 +10,9 @@ import android.util.Log;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 
 import lanou.foodpartydemo.R;
 import lanou.foodpartydemo.base.BaseFragment;
@@ -25,7 +27,6 @@ import lanou.foodpartydemo.tools.VolleySingle;
 public class FirstPageFragment extends BaseFragment {
     private Context context;
     private RecyclerView recyclerView;
-    private ArrayList<FirstPageBean.FeedsBean> arrayList;
     private int page = 2;
     private SwipeRefreshLayout refreshLayout;
     private FirstPageAdapter adapter;
@@ -44,19 +45,84 @@ public class FirstPageFragment extends BaseFragment {
     @Override
     protected void initData() {
         adapter = new FirstPageAdapter(context);
+        getGson(UrlValues.FIRST_PAGE,true);
+        recyclerView.setAdapter(adapter);
+        StaggeredGridLayoutManager manager = new
+                StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(manager);
+        recyclerView.addOnScrollListener(new EndLessOnScrollListener(manager) {
+            @Override
+            protected void onLoadMore(int curentPage) {
+                getGson("http://food.boohee.com/fb/v1/feeds/category_feed?page="+page+"&category=1&per=10",false);
+                page++;
+            }
+        });
 
-        final GsonRequest<FirstPageBean> gsonRequest = new GsonRequest<FirstPageBean>(FirstPageBean.class,
-                UrlValues.FIRST_PAGE, new Response.Listener<FirstPageBean>() {
 
 
+//        adapter = new FirstPageAdapter(context);
+//        arrayList = new ArrayList<>();
+//        final GsonRequest<FirstPageBean> gsonRequest = new GsonRequest<FirstPageBean>(FirstPageBean.class,
+//                UrlValues.FIRST_PAGE, new Response.Listener<FirstPageBean>() {
+//            @Override
+//            public void onResponse(FirstPageBean response) {
+//                arrayList = (ArrayList<FirstPageBean.FeedsBean>) response.getFeeds();
+//                adapter.setArrayList(arrayList);
+//                recyclerView.setAdapter(adapter);
+//            }
+//        }, new Response.ErrorListener() {
+//            @Override
+//            public void onErrorResponse(VolleyError error) {
+//
+//            }
+//        });
+//        VolleySingle.getVolleySingle().addRequest(gsonRequest);
+//         final StaggeredGridLayoutManager manager =  new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
+//        recyclerView.setLayoutManager(manager);
+//        recyclerView.addOnScrollListener(new EndLessOnScrollListener(manager) {
+//            @Override
+//            protected void onLoadMore(int curentPage) {
+//                Log.d("FirstPageFragment", "11111");
+//                GsonRequest<FirstPageBean> gsonRequest1 =
+//                        new GsonRequest<FirstPageBean>(FirstPageBean.class,
+//                                "http://food.boohee.com/fb/v1/feeds/category_feed?page=" + page + "&category=1&per=10",
+//                                new Response.Listener<FirstPageBean>() {
+//                                    @Override
+//                                    public void onResponse(FirstPageBean response) {
+//                                        arrayList = (ArrayList<FirstPageBean.FeedsBean>) response.getFeeds();
+//                                        adapter.setArrayList(arrayList);
+//                                        recyclerView.setAdapter(adapter);
+////                                        adapter.notifyDataSetChanged();
+//                                        recyclerView.setLayoutManager(manager);
+//
+//
+//                                    }
+//                                }, new Response.ErrorListener() {
+//                            @Override
+//                            public void onErrorResponse(VolleyError error) {
+//
+//                            }
+//                        });
+//                VolleySingle.getVolleySingle().addRequest(gsonRequest1);
+//                page = page + 1;
+//                Log.d("FirstPageFragment", "page:" + page);
+//            }
+//        });
 
+
+    }
+
+    @Override
+    protected void addFragmentArrayList() {
+
+    }
+    public void getGson(String url, final boolean isRefresh) {
+        GsonRequest<FirstPageBean> gsonRequest = new GsonRequest<FirstPageBean>(FirstPageBean.class,
+                url, new Response.Listener<FirstPageBean>() {
             @Override
             public void onResponse(FirstPageBean response) {
-                arrayList = (ArrayList<FirstPageBean.FeedsBean>) response.getFeeds();
-
-                adapter.setArrayList(arrayList);
-                recyclerView.setAdapter(adapter);
-
+//
+                adapter.setArrayList(response.getFeeds(),isRefresh);
 
             }
         }, new Response.ErrorListener() {
@@ -66,46 +132,9 @@ public class FirstPageFragment extends BaseFragment {
             }
         });
         VolleySingle.getVolleySingle().addRequest(gsonRequest);
-        StaggeredGridLayoutManager manager =  new StaggeredGridLayoutManager(2,StaggeredGridLayoutManager.VERTICAL);
-        recyclerView.setLayoutManager(manager);
-        recyclerView.addOnScrollListener(new EndLessOnScrollListener(manager) {
-            @Override
-            protected void onLoadMore(int curentPage) {
-                Log.d("FirstPageFragment", "11111");
-                GsonRequest<FirstPageBean> gsonRequest1 =
-                        new GsonRequest<FirstPageBean>(FirstPageBean.class,
-                                "http://food.boohee.com/fb/v1/feeds/category_feed?page=" + page + "&category=1&per=10",
-                                new Response.Listener<FirstPageBean>() {
-                                    @Override
-                                    public void onResponse(FirstPageBean response) {
-                                        arrayList = (ArrayList<FirstPageBean.FeedsBean>) response.getFeeds();
-                                        adapter.setArrayList(arrayList);
-                                        adapter.notifyDataSetChanged();
-
-
-                                    }
-                                }, new Response.ErrorListener() {
-                            @Override
-                            public void onErrorResponse(VolleyError error) {
-
-                            }
-                        });
-                VolleySingle.getVolleySingle().addRequest(gsonRequest1);
-                page = page + 1;
-                Log.d("FirstPageFragment", "page:" + page);
-            }
-        });
-
-
     }
 
-    @Override
-    protected void addFragmentArrayList() {
-
-    }
-
-    @Override
-    protected void refresh() {
+//    protected void refresh() {
 
 //        recyclerView.addOnScrollListener(new EndLessOnScrollListener(manager) {
 //            FirstPageAdapter adapter1 = new FirstPageAdapter(context);
@@ -139,12 +168,12 @@ public class FirstPageFragment extends BaseFragment {
 //                adapter1.notifyDataSetChanged();
 //            }
 //        });
-    }
+//    }
 
     @Override
     protected void initView() {
         recyclerView = bindView(R.id.rv_first_page);
-        refreshLayout = (SwipeRefreshLayout) recyclerView.findViewById(R.id.refreshLayout);
+        refreshLayout = (SwipeRefreshLayout) recyclerView.findViewById(R.id.refreshLayout_first_page);
     }
 
     @Override

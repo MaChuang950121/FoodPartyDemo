@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import lanou.foodpartydemo.R;
 import lanou.foodpartydemo.bean.FirstPageBean;
@@ -20,13 +21,27 @@ import lanou.foodpartydemo.tools.VolleySingle;
  */
 public class FirstPageAdapter extends RecyclerView.Adapter<FirstPageAdapter.MyViewHolder>{
     private Context context;
-    ArrayList<FirstPageBean.FeedsBean> arrayList = new ArrayList<>();
+    List<FirstPageBean.FeedsBean> arrayList ;
 
     public FirstPageAdapter(Context context) {
         this.context = context;
     }
 
-    public void setArrayList(ArrayList<FirstPageBean.FeedsBean> arrayList) {
+    /**
+     * 添加数据
+     * @param arrayList
+     * @param isRefresh true 刷新数据 false 加载数据
+     */
+    public void setArrayList(List<FirstPageBean.FeedsBean> arrayList,boolean isRefresh) {
+        if(isRefresh || this.arrayList == null){
+            setArrayList(arrayList);
+        }else {
+            this.arrayList.addAll(arrayList);
+            notifyDataSetChanged();
+        }
+
+    }
+    public void setArrayList(List<FirstPageBean.FeedsBean> arrayList) {
         this.arrayList = arrayList;
         notifyDataSetChanged();
     }

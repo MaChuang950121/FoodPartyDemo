@@ -57,11 +57,11 @@ public abstract class BaseFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        refresh();
+
         initData();
     }
 
-    protected abstract void refresh();
+
 
     protected <T extends View> T bindView(int id){
         return (T) getView().findViewById(id);

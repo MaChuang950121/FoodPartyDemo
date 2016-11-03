@@ -41,10 +41,7 @@ public class HomePageFragment extends BaseFragment {
         bindFragment(arrayList,new FoodFragment());
     }
 
-    @Override
-    protected void refresh() {
 
-    }
 
     @Override
     protected void initView() {
