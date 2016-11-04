@@ -1,5 +1,6 @@
 package lanou.foodpartydemo.homepage;
 
+import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 
@@ -10,13 +11,14 @@ import lanou.foodpartydemo.R;
 import lanou.foodpartydemo.base.BaseFragment;
 import lanou.foodpartydemo.bean.MyBean;
 import lanou.foodpartydemo.tools.GsonRequest;
+import lanou.foodpartydemo.tools.OnRecyclerItemClickListener;
 import lanou.foodpartydemo.tools.UrlValues;
 import lanou.foodpartydemo.tools.VolleySingle;
 
 /**
  * Created by dllo on 16/11/1.
  */
-public class FoodFragment extends BaseFragment {
+public class FoodFragment extends BaseFragment implements OnRecyclerItemClickListener {
 
     private RecyclerView recyclerView;
     private MyAdapter adapter;
@@ -41,6 +43,7 @@ public class FoodFragment extends BaseFragment {
                 page++;
             }
         });
+        adapter.setOnRecyclerItemClickListener(this);
 
     }
 
@@ -73,5 +76,12 @@ public class FoodFragment extends BaseFragment {
     @Override
     public int getLayout() {
         return R.layout.fragment_food;
+    }
+
+    @Override
+    public void onItemClick(int position) {
+        Intent intent = new Intent(getContext(),WebActivity.class);
+        intent.putExtra("url",adapter.arrayList.get(position).getLink());
+        startActivity(intent);
     }
 }

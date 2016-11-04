@@ -8,6 +8,8 @@ import android.view.View;
 
 import java.util.ArrayList;
 
+import cn.bmob.v3.Bmob;
+
 /**
  * Created by dllo on 16/10/21.
  */
@@ -18,7 +20,8 @@ public abstract class BaseActivity extends AppCompatActivity {
         setContentView(getLayout());
         initViews();
         initData();
-
+        //第一：默认初始化 建议初始化放到Application里
+        Bmob.initialize(this, "6e73c4c8a347ac2f3a1b9716714db329");
     }
 
     protected abstract void initData();

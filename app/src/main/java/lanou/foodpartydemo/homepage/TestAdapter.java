@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -13,6 +14,7 @@ import java.util.List;
 
 import lanou.foodpartydemo.R;
 import lanou.foodpartydemo.bean.TestBean;
+import lanou.foodpartydemo.tools.OnRecyclerItemClickListener;
 import lanou.foodpartydemo.tools.VolleySingle;
 
 /**
@@ -21,8 +23,13 @@ import lanou.foodpartydemo.tools.VolleySingle;
 public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder>{
     Context context;
    List<TestBean.FeedsBean> arrayList;
+    OnRecyclerItemClickListener onRecyclerItemClickListener;
 
-    public void setArrayList(List<TestBean.FeedsBean> arrayList,boolean isRefresh) {
+    public void setOnRecyclerItemClickListener(OnRecyclerItemClickListener onRecyclerItemClickListener) {
+        this.onRecyclerItemClickListener = onRecyclerItemClickListener;
+    }
+
+    public void setArrayList(List<TestBean.FeedsBean> arrayList, boolean isRefresh) {
         if (isRefresh || this.arrayList == null){
             setArrayList(arrayList);
         }else{
@@ -50,11 +57,17 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(TestAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(TestAdapter.ViewHolder holder, final int position) {
         VolleySingle.getVolleySingle().getImage(arrayList.get(position).getBackground(),holder.im);
         holder.source.setText(arrayList.get(position).getSource());
         holder.title.setText(arrayList.get(position).getTitle());
         holder.tail.setText(arrayList.get(position).getTail());
+        holder.ll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onRecyclerItemClickListener.onItemClick(position);
+            }
+        });
     }
 
     @Override
@@ -64,10 +77,11 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView im;
-        private final TextView source;
-        private final TextView title;
-        private final TextView tail;
+        private  ImageView im;
+        private  TextView source;
+        private  TextView title;
+        private  TextView tail;
+        private  LinearLayout ll;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -75,6 +89,7 @@ public class TestAdapter extends RecyclerView.Adapter<TestAdapter.ViewHolder>{
             source = (TextView) itemView.findViewById(R.id.tv_test_source);
             title = (TextView) itemView.findViewById(R.id.tv_test_title);
             tail = (TextView) itemView.findViewById(R.id.tv_test_tail);
+            ll = (LinearLayout) itemView.findViewById(R.id.ll_test);
         }
     }
 }

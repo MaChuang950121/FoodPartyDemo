@@ -6,12 +6,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 
 import lanou.foodpartydemo.R;
 import lanou.foodpartydemo.bean.LibraryBean;
+import lanou.foodpartydemo.tools.OnItemClickListener;
 import lanou.foodpartydemo.tools.VolleySingle;
 
 /**
@@ -20,6 +22,12 @@ import lanou.foodpartydemo.tools.VolleySingle;
 public class LibraryAdapter extends BaseAdapter {
     private Context context;
     ArrayList<LibraryBean.GroupBean.CategoriesBean> arrayList;
+
+    OnItemClickListener onItemClickListener;
+
+    public void setOnItemClickListener(OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
+    }
 
     public LibraryAdapter(Context context) {
         this.context = context;
@@ -45,7 +53,7 @@ public class LibraryAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
+    public View getView(final int i, View view, ViewGroup viewGroup) {
         ViewHolder viewHolder = null;
         if (view == null){
             view = LayoutInflater.from(context).inflate(R.layout.item_library,viewGroup,false);
@@ -56,6 +64,7 @@ public class LibraryAdapter extends BaseAdapter {
         }
         viewHolder.libraryTv.setText(arrayList.get(i).getName());
         VolleySingle.getVolleySingle().getImage(arrayList.get(i).getImage_url(),viewHolder.libraryIm);
+
         return view;
     }
 
@@ -63,10 +72,12 @@ public class LibraryAdapter extends BaseAdapter {
 
         private  ImageView libraryIm;
         private  TextView libraryTv;
+        private final LinearLayout ll;
 
         public ViewHolder(View view) {
             libraryIm = (ImageView) view.findViewById(R.id.im_library);
             libraryTv = (TextView) view.findViewById(R.id.tv_library);
+            ll = (LinearLayout) view.findViewById(R.id.ll_library);
         }
     }
 }

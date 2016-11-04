@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="60dp">
+    <ImageView
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:id="@+id/iv_profile"
+        android:src="@mipmap/ic_my_order"
+        android:layout_marginLeft="20dp"
+        android:layout_centerVertical="true"
+        />
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="我的订单"
+        android:layout_marginLeft="60dp"
+        android:textSize="18dp"
+        android:layout_centerVertical="true"
+        />
+    <ImageView
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:src="@mipmap/list_arrow"
+        android:id="@+id/iv_more"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="20dp"
+        android:layout_centerVertical="true"
+        />
+    <View
+        android:layout_width="wrap_content"
+        android:layout_height="1dp"
+        android:background="#E0E0E0"
+        android:layout_alignParentBottom="true"
+        android:layout_alignLeft="@id/iv_profile"
+        android:layout_alignRight="@id/iv_more"
+
+        />
+</RelativeLayout>

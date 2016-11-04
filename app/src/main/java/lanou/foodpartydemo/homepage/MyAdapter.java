@@ -6,12 +6,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.List;
 
 import lanou.foodpartydemo.R;
 import lanou.foodpartydemo.bean.MyBean;
+import lanou.foodpartydemo.tools.OnRecyclerItemClickListener;
 import lanou.foodpartydemo.tools.VolleySingle;
 
 /**
@@ -20,7 +23,11 @@ import lanou.foodpartydemo.tools.VolleySingle;
 public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     private Context context;
     List<MyBean.FeedsBean> arrayList;
+    OnRecyclerItemClickListener onRecyclerItemClickListener;
 
+    public void setOnRecyclerItemClickListener(OnRecyclerItemClickListener onRecyclerItemClickListener) {
+        this.onRecyclerItemClickListener = onRecyclerItemClickListener;
+    }
 
     public void setArrayList(List<MyBean.FeedsBean> arrayList, boolean isRefresh) {
         if (isRefresh || this.arrayList == null){
@@ -65,13 +72,19 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
     }
 
     @Override
-    public void onBindViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(ViewHolder holder, final int position) {
         if (arrayList.get(position).getImages().size() == 1){
         holder.title.setText(arrayList.get(position).getTitle());
         holder.source.setText(arrayList.get(position).getSource());
         holder.tail.setText(arrayList.get(position).getTail());
         VolleySingle.getVolleySingle().
                 getImage(String.valueOf(arrayList.get(position).getImages().get(0)),holder.iv);
+            holder.lKnowledge.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onRecyclerItemClickListener.onItemClick(position);
+                }
+            });
         }else {
             holder.lateralTitle.setText(arrayList.get(position).getTitle());
             holder.lateralSource.setText(arrayList.get(position).getSource());
@@ -79,7 +92,15 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             VolleySingle.getVolleySingle().getImage(arrayList.get(position).getImages().get(0),holder.imLeft);
             VolleySingle.getVolleySingle().getImage(arrayList.get(position).getImages().get(1),holder.imMid);
             VolleySingle.getVolleySingle().getImage(arrayList.get(position).getImages().get(2),holder.imRight);
+            holder.rKnowledge.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    onRecyclerItemClickListener.onItemClick(position);
+                }
+            });
         }
+
+
     }
 
     @Override
@@ -99,6 +120,8 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
         private final ImageView imRight;
         private final TextView lateralSource;
         private final TextView lateralTail;
+        private final LinearLayout lKnowledge;
+        private final RelativeLayout rKnowledge;
 
         public ViewHolder(View itemView) {
             super(itemView);
@@ -112,6 +135,9 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
             imRight = (ImageView) itemView.findViewById(R.id.im_right);
             lateralSource = (TextView) itemView.findViewById(R.id.tv_lateral_source);
             lateralTail = (TextView) itemView.findViewById(R.id.tv_lateral_tail);
+            lKnowledge = (LinearLayout) itemView.findViewById(R.id.ll_knowledge);
+            rKnowledge = (RelativeLayout) itemView.findViewById(R.id.rv_knowledges);
+
         }
     }
 }
