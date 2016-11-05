@@ -2,6 +2,8 @@ package lanou.foodpartydemo.library;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -36,6 +38,7 @@ public class LibraryFragment extends BaseFragment  {
     private LibraryAdapter adapter;
     private LibraryAdapter adapter1;
     private LibraryAdapter adapter2;
+
 
     @Override
     public void onAttach(Context context) {
@@ -88,6 +91,13 @@ public class LibraryFragment extends BaseFragment  {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getContext(),LibraryNextActivity.class);
                 intent.putExtra("name",brand.get(i).getName());
+                ArrayList<String> brBean = new ArrayList<String>();
+                for (int j = 0; j < brand.get(i).getSub_category_count(); j++) {
+                    String kind = brand.get(i).getSub_categories().get(j).getName();
+                    Log.d("LibraryFragment", kind);
+                    brBean.add(kind);
+                }
+                intent.putStringArrayListExtra("kind",brBean);
                 startActivity(intent);
             }
         });
@@ -96,6 +106,15 @@ public class LibraryFragment extends BaseFragment  {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getContext(),LibraryNextActivity.class);
                 intent.putExtra("name",categories.get(i).getName());
+                ArrayList<String> cgBean = new ArrayList<String>();
+                for (int j = 0; j < categories.get(i).getSub_category_count(); j++) {
+                   String kind =  categories.get(i).getSub_categories().get(j).getName();
+                    Log.d("LibraryFragment", kind);
+
+                    cgBean.add(kind);
+                }
+
+                intent.putStringArrayListExtra("kind",cgBean);
                 startActivity(intent);
             }
         });
@@ -104,6 +123,13 @@ public class LibraryFragment extends BaseFragment  {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getContext(),LibraryNextActivity.class);
                 intent.putExtra("name",restaurant.get(i).getName());
+                ArrayList<String> rtBean = new ArrayList<String>();
+                for (int j = 0; j < restaurant.get(i).getSub_category_count(); j++) {
+                    String kind = restaurant.get(i).getSub_categories().get(j).getName();
+                    Log.d("LibraryFragment", kind);
+                    rtBean.add(kind);
+                }
+                intent.putStringArrayListExtra("kind",rtBean);
                 startActivity(intent);
             }
         });

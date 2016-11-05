@@ -7,6 +7,7 @@
     android:layout_height="wrap_content"
     android:text="营养素排序"
     android:textSize="20dp"
+    android:id="@+id/nutrition_order"
     android:layout_marginLeft="10dp"
     />
     <View
