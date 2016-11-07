@@ -14,6 +14,7 @@ import com.android.volley.VolleyError;
 
 import java.util.ArrayList;
 
+import cn.bmob.v3.b.I;
 import lanou.foodpartydemo.R;
 import lanou.foodpartydemo.base.BaseFragment;
 import lanou.foodpartydemo.bean.LibraryBean;
@@ -91,13 +92,19 @@ public class LibraryFragment extends BaseFragment  {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getContext(),LibraryNextActivity.class);
                 intent.putExtra("name",brand.get(i).getName());
+                intent.putExtra("value",brand.get(i).getId());
+                intent.putExtra("group","brand");
                 ArrayList<String> brBean = new ArrayList<String>();
+                ArrayList<Integer> idBrBean = new ArrayList<Integer>();
                 for (int j = 0; j < brand.get(i).getSub_category_count(); j++) {
                     String kind = brand.get(i).getSub_categories().get(j).getName();
                     Log.d("LibraryFragment", kind);
+                    int id = brand.get(i).getSub_categories().get(j).getId();
                     brBean.add(kind);
+                    idBrBean.add(id);
                 }
                 intent.putStringArrayListExtra("kind",brBean);
+                intent.putIntegerArrayListExtra("id",idBrBean);
                 startActivity(intent);
             }
         });
@@ -105,15 +112,19 @@ public class LibraryFragment extends BaseFragment  {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getContext(),LibraryNextActivity.class);
+                intent.putExtra("group","group");
                 intent.putExtra("name",categories.get(i).getName());
+                intent.putExtra("value",categories.get(i).getId());
                 ArrayList<String> cgBean = new ArrayList<String>();
+                ArrayList<Integer> idCgBean = new ArrayList<Integer>();
                 for (int j = 0; j < categories.get(i).getSub_category_count(); j++) {
                    String kind =  categories.get(i).getSub_categories().get(j).getName();
+                    int id = categories.get(i).getSub_categories().get(j).getId();
                     Log.d("LibraryFragment", kind);
-
                     cgBean.add(kind);
+                    idCgBean.add(id);
                 }
-
+                intent.putIntegerArrayListExtra("id",idCgBean);
                 intent.putStringArrayListExtra("kind",cgBean);
                 startActivity(intent);
             }
@@ -123,13 +134,19 @@ public class LibraryFragment extends BaseFragment  {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent = new Intent(getContext(),LibraryNextActivity.class);
                 intent.putExtra("name",restaurant.get(i).getName());
+                intent.putExtra("value",restaurant.get(i).getId());
+                intent.putExtra("group","restaurant");
                 ArrayList<String> rtBean = new ArrayList<String>();
+                ArrayList<Integer> idRtBean = new ArrayList<Integer>();
                 for (int j = 0; j < restaurant.get(i).getSub_category_count(); j++) {
                     String kind = restaurant.get(i).getSub_categories().get(j).getName();
+                    int id = restaurant.get(i).getSub_categories().get(j).getId();
                     Log.d("LibraryFragment", kind);
+                    idRtBean.add(id);
                     rtBean.add(kind);
                 }
                 intent.putStringArrayListExtra("kind",rtBean);
+                intent.putIntegerArrayListExtra("id",idRtBean);
                 startActivity(intent);
             }
         });
