@@ -3,6 +3,8 @@ package lanou.foodpartydemo.library;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,7 +12,13 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.List;
+import java.util.concurrent.ThreadPoolExecutor;
 
 import lanou.foodpartydemo.R;
 import lanou.foodpartydemo.bean.LibraryNextBean;
@@ -23,6 +31,7 @@ import lanou.foodpartydemo.tools.VolleySingle;
 public class LibraryNextAdapter extends BaseAdapter{
     private Context context;
     List<LibraryNextBean.FoodsBean> list;
+    private ViewHolder viewHolder;
 
     public void setList(List<LibraryNextBean.FoodsBean> list) {
         this.list = list;
@@ -57,8 +66,8 @@ public class LibraryNextAdapter extends BaseAdapter{
     }
 
     @Override
-    public View getView(int i, View view, ViewGroup viewGroup) {
-         ViewHolder viewHolder = null;
+    public View getView(final int i, View view, ViewGroup viewGroup) {
+        viewHolder = null;
         if (view == null){
             view = LayoutInflater.from(context).inflate(R.layout.item_library_next,null);
             viewHolder = new ViewHolder(view);
@@ -69,10 +78,45 @@ public class LibraryNextAdapter extends BaseAdapter{
         viewHolder.nameNext.setText(list.get(i).getName());
         viewHolder.calory.setText(list.get(i).getCalory());
         viewHolder.weight.setText(list.get(i).getWeight());
-        VolleySingle.getVolleySingle().getImage(list.get(i).getThumb_image_url(),viewHolder.libNext);
+        VolleySingle.getVolleySingle().getCircleImg(list.get(i).getThumb_image_url(),viewHolder.libNext);
 //        Bitmap nextBitmap = BitmapFactory.decodeResource(context.getResources(),R.id.im_library_next);
 //        CircleDrawable circleDrawable = new CircleDrawable(nextBitmap);
 //        viewHolder.libNext.setImageDrawable(circleDrawable);
+
+//        new AsyncTask<String, Void, Bitmap>() {
+//            @Override
+//            protected Bitmap doInBackground(String... strings) {
+//
+//                Bitmap bitmap1 = null;
+//                try {
+//                    URL url = new URL(strings[0]);
+//                    Log.d("LibraryNextAdapter", list.get(i).getThumb_image_url());
+//                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+//                    if (HttpURLConnection.HTTP_OK == connection.getResponseCode()){
+//                        InputStream inputStream = connection.getInputStream();
+//                        bitmap1 = BitmapFactory.decodeStream(inputStream);
+//                        Log.d("LibraryNextAdapter", "bitmap1:" + bitmap1);
+//                        inputStream.close();
+//                        connection.disconnect();
+//                    }
+//                } catch (MalformedURLException e) {
+//                    e.printStackTrace();
+//                } catch (IOException e) {
+//                    e.printStackTrace();
+//                }
+//                return bitmap1;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(Bitmap bitmap) {
+//                super.onPostExecute(bitmap);
+//                CircleDrawable circleDrawable = new CircleDrawable(bitmap);
+//                viewHolder.libNext.setImageDrawable(circleDrawable);
+//            }
+//        }.execute(list.get(i).getThumb_image_url());
+
+
+
         if (list.get(i).getHealth_light() == 1){
             Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(),R.mipmap.ic_food_light_green);
             viewHolder.point.setImageBitmap(bitmap);
@@ -91,7 +135,7 @@ public class LibraryNextAdapter extends BaseAdapter{
         private  TextView nameNext;
         private  TextView calory;
         private  ImageView point;
-        private final TextView weight;
+        private  TextView weight;
 
         public ViewHolder(View view) {
             libNext = (ImageView) view.findViewById(R.id.im_library_next);

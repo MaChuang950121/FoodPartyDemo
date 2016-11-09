@@ -43,7 +43,7 @@ public class LibraryAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int i) {
+    public LibraryBean.GroupBean.CategoriesBean getItem(int i) {
         return arrayList.get(i);
     }
 
@@ -72,7 +72,7 @@ public class LibraryAdapter extends BaseAdapter {
 
         private  ImageView libraryIm;
         private  TextView libraryTv;
-        private final LinearLayout ll;
+        private  LinearLayout ll;
 
         public ViewHolder(View view) {
             libraryIm = (ImageView) view.findViewById(R.id.im_library);

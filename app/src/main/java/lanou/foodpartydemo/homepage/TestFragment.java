@@ -94,4 +94,9 @@ public class TestFragment extends BaseFragment implements OnRecyclerItemClickLis
         intent.putExtra("url",adapter.arrayList.get(position).getLink());
         startActivity(intent);
     }
+
+    @Override
+    public void onItemClick(int position, String order) {
+
+    }
 }

@@ -23,6 +23,7 @@ public class OrderPopAdapter extends RecyclerView.Adapter<OrderPopAdapter.ViewHo
     ArrayList<NutritionOrderBean.TypesBean> arrayList;
     OnRecyclerItemClickListener onRecyclerItemClickListener;
 
+
     public void setOnRecyclerItemClickListener(OnRecyclerItemClickListener onRecyclerItemClickListener) {
         this.onRecyclerItemClickListener = onRecyclerItemClickListener;
     }
@@ -50,6 +51,7 @@ public class OrderPopAdapter extends RecyclerView.Adapter<OrderPopAdapter.ViewHo
             @Override
             public void onClick(View view) {
                 onRecyclerItemClickListener.onItemClick(position);
+                onRecyclerItemClickListener.onItemClick(position,arrayList.get(position).getIndex());
             }
         });
     }

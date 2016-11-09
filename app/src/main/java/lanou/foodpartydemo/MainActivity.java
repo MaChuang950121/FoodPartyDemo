@@ -25,7 +25,7 @@ public class MainActivity extends BaseActivity implements View.OnClickListener{
         library.setChecked(true);
         FragmentManager manager = getSupportFragmentManager();
         FragmentTransaction transaction = manager.beginTransaction();
-        transaction.replace(R.id.fl_replace,new ListFragment());
+        transaction.replace(R.id.fl_replace,new LibraryFragment());
         transaction.commit();
     }
 

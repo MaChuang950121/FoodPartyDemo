@@ -30,6 +30,7 @@
         </activity>
         <activity android:name=".homepage.WebActivity" android:theme="@style/CustomTitle"/>
         <activity android:name=".library.LibraryNextActivity" android:theme="@style/CustomTitle"/>
+        <activity android:name=".homepage.FirstPageNextActivity" android:theme="@style/CustomTitle"/>
     </application>
 
 </manifest>

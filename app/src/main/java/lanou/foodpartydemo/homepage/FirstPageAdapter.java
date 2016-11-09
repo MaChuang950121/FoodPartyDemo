@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 import lanou.foodpartydemo.R;
 import lanou.foodpartydemo.bean.FirstPageBean;
 import lanou.foodpartydemo.tools.CircleImageView;
+import lanou.foodpartydemo.tools.OnRecyclerItemClickListener;
 import lanou.foodpartydemo.tools.VolleySingle;
 
 /**
@@ -22,6 +24,11 @@ import lanou.foodpartydemo.tools.VolleySingle;
 public class FirstPageAdapter extends RecyclerView.Adapter<FirstPageAdapter.MyViewHolder>{
     private Context context;
     List<FirstPageBean.FeedsBean> arrayList ;
+    OnRecyclerItemClickListener onRecyclerItemClickListener;
+
+    public void setOnRecyclerItemClickListener(OnRecyclerItemClickListener onRecyclerItemClickListener) {
+        this.onRecyclerItemClickListener = onRecyclerItemClickListener;
+    }
 
     public FirstPageAdapter(Context context) {
         this.context = context;
@@ -54,13 +61,20 @@ public class FirstPageAdapter extends RecyclerView.Adapter<FirstPageAdapter.MyVi
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
+    public void onBindViewHolder(MyViewHolder holder, final int position) {
         VolleySingle.getVolleySingle().getImage(arrayList.get(position).getCard_image(),holder.cardImage);
         holder.title.setText(arrayList.get(position).getTitle());
         holder.description.setText(arrayList.get(position).getDescription());
         //VolleySingle.getVolleySingle().getImage(arrayList.get(position).getPublisher_avatar(),holder.publisherIamge);
         holder.publisher.setText(arrayList.get(position).getPublisher());
         holder.like.setText(String.valueOf(arrayList.get(position).getLike_ct()));
+        VolleySingle.getVolleySingle().getCircleImg(arrayList.get(position).getPublisher_avatar(),holder.publishImage);
+        holder.rlFirstpage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                onRecyclerItemClickListener.onItemClick(position);
+            }
+        });
     }
 
     @Override
@@ -70,21 +84,24 @@ public class FirstPageAdapter extends RecyclerView.Adapter<FirstPageAdapter.MyVi
 
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
-        private final ImageView cardImage;
-        private final TextView title;
-        private final TextView description;
-        private final CircleImageView publisherIamge;
-        private final TextView publisher;
-        private final TextView like;
+        private  ImageView cardImage;
+        private  TextView title;
+        private  TextView description;
+
+        private  TextView publisher;
+        private  TextView like;
+        private  ImageView publishImage;
+        private  RelativeLayout rlFirstpage;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             cardImage = (ImageView) itemView.findViewById(R.id.homepage_item_cardimage);
             title = (TextView) itemView.findViewById(R.id.homepage_item_title);
             description = (TextView) itemView.findViewById(R.id.homepage_item_description);
-            publisherIamge = (CircleImageView) itemView.findViewById(R.id.homepage_item_publisherimage);
+            publishImage = (ImageView) itemView.findViewById(R.id.homepage_item_publisherimage);
             publisher = (TextView) itemView.findViewById(R.id.homepage_item_publisher);
             like = (TextView) itemView.findViewById(R.id.homepage_item_like);
+            rlFirstpage = (RelativeLayout) itemView.findViewById(R.id.rl_firstpage);
 
         }
     }

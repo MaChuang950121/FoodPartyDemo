@@ -2,7 +2,9 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:id="@+id/rl_firstpage"
+    >
 
     <ImageView
         android:layout_width="wrap_content"
@@ -40,11 +42,12 @@
             android:layout_marginTop="5dp"
             android:layout_marginLeft="5dp"
             >
-            <lanou.foodpartydemo.tools.CircleImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+            <ImageView
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:id="@+id/homepage_item_publisherimage"
-                app:isCircle="true"
+                android:layout_centerVertical="true"
+               android:layout_alignParentLeft="true"
                 />
             <TextView
                 android:layout_width="wrap_content"

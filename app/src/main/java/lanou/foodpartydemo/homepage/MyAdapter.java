@@ -110,18 +110,18 @@ public class MyAdapter extends RecyclerView.Adapter<MyAdapter.ViewHolder>{
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        private final TextView title;
-        private final TextView source;
-        private final TextView tail;
-        private final ImageView iv;
-        private final TextView lateralTitle;
-        private final ImageView imLeft;
-        private final ImageView imMid;
-        private final ImageView imRight;
-        private final TextView lateralSource;
-        private final TextView lateralTail;
-        private final LinearLayout lKnowledge;
-        private final RelativeLayout rKnowledge;
+        private  TextView title;
+        private  TextView source;
+        private  TextView tail;
+        private  ImageView iv;
+        private  TextView lateralTitle;
+        private  ImageView imLeft;
+        private  ImageView imMid;
+        private  ImageView imRight;
+        private  TextView lateralSource;
+        private  TextView lateralTail;
+        private  LinearLayout lKnowledge;
+        private  RelativeLayout rKnowledge;
 
         public ViewHolder(View itemView) {
             super(itemView);

@@ -5,8 +5,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.LinearLayout;
+import android.widget.Toast;
 
 
 import com.android.volley.Response;
@@ -28,8 +31,8 @@ import lanou.foodpartydemo.tools.VolleySingle;
 /**
  * Created by dllo on 16/11/1.
  */
-public class LibraryFragment extends BaseFragment  {
-    Context context;
+public class LibraryFragment extends BaseFragment implements View.OnClickListener {
+
     private GridView gridViewCg;
     private GridView gridViewBr;
     private GridView gridViewRt;
@@ -39,13 +42,8 @@ public class LibraryFragment extends BaseFragment  {
     private LibraryAdapter adapter;
     private LibraryAdapter adapter1;
     private LibraryAdapter adapter2;
+    private LinearLayout search;
 
-
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-        this.context = context;
-    }
 
     @Override
     protected void addAdapter() {
@@ -87,79 +85,52 @@ public class LibraryFragment extends BaseFragment  {
             });
             VolleySingle.getVolleySingle().addRequest(gsonRequest);
 
-        gridViewBr.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getContext(),LibraryNextActivity.class);
-                intent.putExtra("name",brand.get(i).getName());
-                intent.putExtra("value",brand.get(i).getId());
-                intent.putExtra("group","brand");
-                ArrayList<String> brBean = new ArrayList<String>();
-                ArrayList<Integer> idBrBean = new ArrayList<Integer>();
-                for (int j = 0; j < brand.get(i).getSub_category_count(); j++) {
-                    String kind = brand.get(i).getSub_categories().get(j).getName();
-                    Log.d("LibraryFragment", kind);
-                    int id = brand.get(i).getSub_categories().get(j).getId();
-                    brBean.add(kind);
-                    idBrBean.add(id);
-                }
-                intent.putStringArrayListExtra("kind",brBean);
-                intent.putIntegerArrayListExtra("id",idBrBean);
-                startActivity(intent);
-            }
-        });
-        gridViewCg.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getContext(),LibraryNextActivity.class);
-                intent.putExtra("group","group");
-                intent.putExtra("name",categories.get(i).getName());
-                intent.putExtra("value",categories.get(i).getId());
-                ArrayList<String> cgBean = new ArrayList<String>();
-                ArrayList<Integer> idCgBean = new ArrayList<Integer>();
-                for (int j = 0; j < categories.get(i).getSub_category_count(); j++) {
-                   String kind =  categories.get(i).getSub_categories().get(j).getName();
-                    int id = categories.get(i).getSub_categories().get(j).getId();
-                    Log.d("LibraryFragment", kind);
-                    cgBean.add(kind);
-                    idCgBean.add(id);
-                }
-                intent.putIntegerArrayListExtra("id",idCgBean);
-                intent.putStringArrayListExtra("kind",cgBean);
-                startActivity(intent);
-            }
-        });
-        gridViewRt.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getContext(),LibraryNextActivity.class);
-                intent.putExtra("name",restaurant.get(i).getName());
-                intent.putExtra("value",restaurant.get(i).getId());
-                intent.putExtra("group","restaurant");
-                ArrayList<String> rtBean = new ArrayList<String>();
-                ArrayList<Integer> idRtBean = new ArrayList<Integer>();
-                for (int j = 0; j < restaurant.get(i).getSub_category_count(); j++) {
-                    String kind = restaurant.get(i).getSub_categories().get(j).getName();
-                    int id = restaurant.get(i).getSub_categories().get(j).getId();
-                    Log.d("LibraryFragment", kind);
-                    idRtBean.add(id);
-                    rtBean.add(kind);
-                }
-                intent.putStringArrayListExtra("kind",rtBean);
-                intent.putIntegerArrayListExtra("id",idRtBean);
-                startActivity(intent);
-            }
-        });
+        gridViewBr.setOnItemClickListener(new MyItemClickListener());
+        gridViewCg.setOnItemClickListener(new MyItemClickListener());
+        gridViewRt.setOnItemClickListener(new MyItemClickListener());
+        setItemOnClick(this,search);
+
 
         }
-
-
-
     @Override
     protected void addFragmentArrayList() {
 
     }
 
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.foodencylope_search:
+                Intent intent = new Intent(getContext(),SearchActivity.class);
+                startActivity(intent);
+                break;
+        }
+    }
+
+    class MyItemClickListener implements AdapterView.OnItemClickListener{
+
+        @Override
+        public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+            LibraryBean.GroupBean.CategoriesBean bean = (LibraryBean.GroupBean.CategoriesBean) adapterView.getItemAtPosition(i);
+
+            Intent intent = new Intent(getContext(),LibraryNextActivity.class);
+            intent.putExtra("name",bean.getName());
+            intent.putExtra("value",bean.getId());
+            intent.putExtra("group","brand");
+            ArrayList<String> brBean = new ArrayList<String>();
+            ArrayList<Integer> idBrBean = new ArrayList<Integer>();
+            for (int j = 0; j < bean.getSub_category_count(); j++) {
+                String kind = bean.getSub_categories().get(j).getName();
+                Log.d("LibraryFragment", kind);
+                int id = bean.getSub_categories().get(j).getId();
+                brBean.add(kind);
+                idBrBean.add(id);
+            }
+            intent.putStringArrayListExtra("kind",brBean);
+            intent.putIntegerArrayListExtra("id",idBrBean);
+            startActivity(intent);
+        }
+    }
 
 
 
@@ -168,6 +139,7 @@ public class LibraryFragment extends BaseFragment  {
         gridViewCg = bindView(R.id.foodencylope_class);
         gridViewBr = bindView(R.id.foodencylope_brand);
         gridViewRt = bindView(R.id.foodencylope_restaurant);
+        search = bindView(R.id.foodencylope_search);
     }
 
     @Override

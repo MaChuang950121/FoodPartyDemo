@@ -20,7 +20,7 @@ import lanou.foodpartydemo.R;
 public abstract class BaseFragment extends Fragment {
 
 
-    private Context context;
+    protected Context context;
 
     @Override
     public void onAttach(Context context) {

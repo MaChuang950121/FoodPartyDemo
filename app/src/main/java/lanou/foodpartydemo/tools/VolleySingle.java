@@ -1,9 +1,11 @@
 package lanou.foodpartydemo.tools;
 
+import android.graphics.Bitmap;
 import android.widget.ImageView;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
+import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 
@@ -41,6 +43,35 @@ public class VolleySingle {
                 ImageLoader.getImageListener(imageView, R.mipmap.ic_launcher, R.mipmap.ic_launcher);
 
         imageLoader.get(url, imageListener);
+    }
+
+    public void getCircleImg(String url,ImageView imageView){
+        CircleImgListener circleImgListener = new CircleImgListener(imageView);
+        imageLoader.get(url,circleImgListener);
+    }
+
+    class CircleImgListener implements ImageLoader.ImageListener{
+        private ImageView imageView;
+
+        public CircleImgListener(ImageView imageView) {
+            this.imageView = imageView;
+        }
+
+        @Override
+        public void onResponse(ImageLoader.ImageContainer response, boolean isImmediate) {
+            Bitmap bitmap = response.getBitmap();
+            if(bitmap == null){
+                imageView.setImageResource(R.mipmap.ic_launcher);
+            }else {
+                CircleDrawable circleDrawable = new CircleDrawable(bitmap);
+                imageView.setImageDrawable(circleDrawable);
+            }
+        }
+
+        @Override
+        public void onErrorResponse(VolleyError error) {
+            imageView.setImageResource(R.mipmap.ic_launcher);
+        }
     }
 
     public <T> void addRequest(Request<T> request) {
