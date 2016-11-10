@@ -14,10 +14,12 @@
         android:id="@+id/search_back"
         />
     <EditText
+        android:id="@+id/edt_search"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_toRightOf="@id/search_back"
         android:layout_marginLeft="5dp"
+
         />
     <ImageView
         android:layout_width="30dp"
@@ -34,12 +36,13 @@
         android:src="@mipmap/ic_delete_default"
         android:layout_toLeftOf="@+id/im_search"
         android:layout_centerVertical="true"
+        android:id="@+id/im_delete"
         />
 </RelativeLayout>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
+        android:id="@+id/sc_scrollView"
         >
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,9 +55,8 @@
         >
         <TextView
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="30dp"
             android:text="最近搜过"
-            android:textSize="20dp"
             android:id="@+id/recent_search"
             />
         <android.support.v7.widget.RecyclerView
@@ -68,8 +70,7 @@
             android:layout_height="wrap_content"
             android:id="@+id/delete_all"
             android:src="@mipmap/ic_photo_delete"
-            android:layout_alignParentBottom="true"
-            android:layout_marginBottom="10dp"
+            android:layout_below="@id/rv_search"
             android:layout_centerHorizontal="true"
             />
         <TextView
@@ -77,9 +78,9 @@
             android:layout_height="wrap_content"
             android:id="@+id/tv_delete_all"
             android:text="清空历史记录"
-            android:layout_alignParentBottom="true"
             android:layout_toRightOf="@id/delete_all"
-            android:layout_marginBottom="10dp"
+            android:layout_alignParentBottom="true"
+            android:padding="5dp"
             />
     </RelativeLayout>
             <TextView
@@ -90,7 +91,9 @@
             android:layout_centerVertical="true"/>
             <android.support.v7.widget.RecyclerView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"></android.support.v7.widget.RecyclerView>
+                android:layout_height="wrap_content"
+                android:id="@+id/rv_everyone_search"
+                ></android.support.v7.widget.RecyclerView>
         </LinearLayout>
     </ScrollView>
     <android.support.v7.widget.RecyclerView
