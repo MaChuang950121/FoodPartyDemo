@@ -33,6 +33,9 @@
         <activity android:name=".homepage.FirstPageNextActivity" android:theme="@style/CustomTitle"/>
         <activity android:name=".library.SearchActivity" android:theme="@style/CustomTitle"/>
         <activity android:name=".mine.LoginActivity" android:theme="@style/CustomTitle"/>
+        <activity android:name=".library.CompareActivity" android:theme="@style/CustomTitle"
+            android:launchMode="singleTask"
+            />
     </application>
 
 </manifest>

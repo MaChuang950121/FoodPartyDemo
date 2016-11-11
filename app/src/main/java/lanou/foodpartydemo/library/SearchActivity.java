@@ -1,5 +1,6 @@
 package lanou.foodpartydemo.library;
 
+import android.content.Intent;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -52,7 +53,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private RecentAdapter recentAdapter;
     private ImageView deleteAll;
     private LinearLayoutManager rcmanager;
-
+public static final int RESULT_CODE = 100;
     @Override
     protected void initData() {
         setOnClick(this,back,search,delete,deleteAll);
@@ -62,6 +63,24 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         everyOneSearchAdapter = new EveryOneSearchAdapter();
         everyOneSearchAdapter.setOnRecyclerItemClickListener(this);
+        adapter.setOnRecyclerItemClickListener(new OnRecyclerItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                Intent intent = new Intent(SearchActivity.this,CompareActivity.class);
+                intent.putExtra("code",adapter.list.get(position).getCode());
+                intent.putExtra("name",adapter.list.get(position).getName());
+                Log.d("SearchActivity", adapter.list.get(position).getCode());
+                Log.d("SearchActivity", adapter.list.get(position).getName());
+                setResult(RESULT_CODE,intent);
+                finish();
+
+            }
+
+            @Override
+            public void onItemClick(int position, String order) {
+
+            }
+        });
         recentAdapter.setOnRecyclerItemClickListener(this);
         GsonRequest<EveryOneSearchBean> gsonRequest = new GsonRequest<EveryOneSearchBean>(EveryOneSearchBean.class,
                 UrlValues.EVERYONE_SEARCH, new Response.Listener<EveryOneSearchBean>() {
@@ -129,7 +148,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                         public void onResponse(SearchBean response) {
 
                             adapter.setList(response.getItems(), true);
-                            Log.d("SearchActivity", response.getItems().toString());
+
                             recyclerView.setAdapter(adapter);
                             recyclerView.setLayoutManager(linearManager);
 
@@ -166,7 +185,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.im_delete:
                 edt.setText("");
-                Log.d("SearchActivity", "list:" + list);
+
                 recentAdapter.setList(list);
                 rvSearch.setAdapter(recentAdapter);
                 rcmanager = new LinearLayoutManager(this);

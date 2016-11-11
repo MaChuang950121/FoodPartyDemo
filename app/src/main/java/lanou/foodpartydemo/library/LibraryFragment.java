@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.GridView;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
@@ -43,6 +44,7 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
     private LibraryAdapter adapter1;
     private LibraryAdapter adapter2;
     private LinearLayout search;
+    private ImageView compare;
 
 
     @Override
@@ -88,7 +90,7 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
         gridViewBr.setOnItemClickListener(new MyItemClickListener());
         gridViewCg.setOnItemClickListener(new MyItemClickListener());
         gridViewRt.setOnItemClickListener(new MyItemClickListener());
-        setItemOnClick(this,search);
+        setItemOnClick(this,search,compare);
 
 
         }
@@ -103,6 +105,10 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
             case R.id.foodencylope_search:
                 Intent intent = new Intent(getContext(),SearchActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.im_compare:
+                Intent intent1 = new Intent(getContext(),CompareActivity.class);
+                startActivity(intent1);
                 break;
         }
     }
@@ -140,6 +146,7 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
         gridViewBr = bindView(R.id.foodencylope_brand);
         gridViewRt = bindView(R.id.foodencylope_restaurant);
         search = bindView(R.id.foodencylope_search);
+        compare = bindView(R.id.im_compare);
     }
 
     @Override
