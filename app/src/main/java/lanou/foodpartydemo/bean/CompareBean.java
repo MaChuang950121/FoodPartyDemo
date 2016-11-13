@@ -21,6 +21,8 @@ public class CompareBean {
     private String thumb_image_url;
     private String large_image_url;
     private String type;
+
+
     /**
      * prop : calory
      * name : 热量
@@ -85,6 +87,15 @@ public class CompareBean {
         private String value;
         private String unit;
         private String remark;
+        private int type;
+
+        public int getType() {
+            return type;
+        }
+
+        public void setType(int type) {
+            this.type = type;
+        }
 
         public String getProp() {
             return prop;

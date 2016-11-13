@@ -53,7 +53,7 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
     private RecentAdapter recentAdapter;
     private ImageView deleteAll;
     private LinearLayoutManager rcmanager;
-public static final int RESULT_CODE = 100;
+    public static final int RESULT_CODE = 100;
     @Override
     protected void initData() {
         setOnClick(this,back,search,delete,deleteAll);
@@ -66,11 +66,11 @@ public static final int RESULT_CODE = 100;
         adapter.setOnRecyclerItemClickListener(new OnRecyclerItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                Intent intent = new Intent(SearchActivity.this,CompareActivity.class);
+                Intent intent = new Intent();
                 intent.putExtra("code",adapter.list.get(position).getCode());
-                intent.putExtra("name",adapter.list.get(position).getName());
                 Log.d("SearchActivity", adapter.list.get(position).getCode());
-                Log.d("SearchActivity", adapter.list.get(position).getName());
+                intent.putExtra("name",adapter.list.get(position).getName());
+                intent.putExtra("image",adapter.list.get(position).getThumb_image_url());
                 setResult(RESULT_CODE,intent);
                 finish();
 
