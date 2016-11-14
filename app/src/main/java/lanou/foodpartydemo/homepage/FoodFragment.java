@@ -82,6 +82,7 @@ public class FoodFragment extends BaseFragment implements OnRecyclerItemClickLis
     public void onItemClick(int position) {
         Intent intent = new Intent(getContext(),WebActivity.class);
         intent.putExtra("url",adapter.arrayList.get(position).getLink());
+        intent.putExtra("title",adapter.arrayList.get(position).getTitle());
         startActivity(intent);
     }
 

@@ -19,7 +19,9 @@ import com.android.volley.VolleyError;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import lanou.foodpartydemo.R;
 import lanou.foodpartydemo.base.BaseActivity;
@@ -142,11 +144,25 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 }else {
                     searchContent = toUtf8(edt.getText().toString());
                     list.add(edt.getText().toString());
+                    for (int i = 0; i < list.size(); i++)
+                    {
+                        for (int j = list.size() - 1 ; j > i; j--)
+                        {
+
+                            if (list.get(i).equals(list.get(j)))
+                            {
+                                list.remove(j);
+                            }
+
+                        }
+                    }
+                    Log.d("SearchActivity", "list:" + list);
+
                     GsonRequest<SearchBean> gsonRequest = new GsonRequest<SearchBean>(SearchBean.class,
                             "http://food.boohee.com/fb/v1/search?page=1&order_asc=desc&q=" + searchContent, new Response.Listener<SearchBean>() {
                         @Override
                         public void onResponse(SearchBean response) {
-
+                            Log.d("SearchActivity", "http://food.boohee.com/fb/v1/search?page=1&order_asc=desc&q=" + searchContent);
                             adapter.setList(response.getItems(), true);
 
                             recyclerView.setAdapter(adapter);
@@ -185,6 +201,18 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
                 break;
             case R.id.im_delete:
                 edt.setText("");
+                for (int i = 0; i < list.size(); i++)  //外循环是循环的次数
+                {
+                    for (int j = list.size() - 1 ; j > i; j--)  //内循环是 外循环一次比较的次数
+                    {
+
+                        if (list.get(i).equals(list.get(j)))
+                        {
+                            list.remove(j);
+                        }
+
+                    }
+                }
 
                 recentAdapter.setList(list);
                 rvSearch.setAdapter(recentAdapter);

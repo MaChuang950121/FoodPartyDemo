@@ -13,6 +13,13 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 import lanou.foodpartydemo.R;
@@ -58,6 +65,8 @@ public class CompareActivity extends BaseActivity implements View.OnClickListene
             getGson("http://food.boohee.com/fb/v1/foods/"+leftCode+"/brief?app_de" +
                     "vice=Android&app_version=2.6&channel=baidu&user_key=90026eec-a1ef-44ff-87bb" +
                     "-e196d7b2848f&token=WDQy4wnxCkVbEy2zG4cB&phone_model=ZTE+N909&os_version=4.1.2%20HTTP/1.1");
+
+
             recyclerView.setAdapter(compareAdapter);
             LinearLayoutManager manager = new LinearLayoutManager(this);
             recyclerView.setLayoutManager(manager);
@@ -82,6 +91,7 @@ public class CompareActivity extends BaseActivity implements View.OnClickListene
              new Response.Listener<CompareBean>() {
          @Override
          public void onResponse(CompareBean response) {
+             Log.d("CompareActivity", "response.getNutrition():" + response.getNutrition());
                 compareAdapter.setArrayList((ArrayList<CompareBean.NutritionBean>) response.getNutrition());
          }
      }, new Response.ErrorListener() {
@@ -90,6 +100,7 @@ public class CompareActivity extends BaseActivity implements View.OnClickListene
 
          }
      });
+     VolleySingle.getVolleySingle().addRequest(gsonRequest);
  }
 
 

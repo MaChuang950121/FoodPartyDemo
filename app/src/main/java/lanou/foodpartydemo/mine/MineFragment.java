@@ -16,6 +16,7 @@ import lanou.foodpartydemo.base.BaseFragment;
 public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     private TextView login;
+    private View collection;
 
 
     @Override
@@ -25,7 +26,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
 
     @Override
     protected void initData() {
-        setItemOnClick(this,login);
+        setItemOnClick(this,login,collection);
     }
 
     @Override
@@ -36,6 +37,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     @Override
     protected void initView() {
         login = bindView(R.id.login);
+        collection = bindView(R.id.collection);
 
     }
 
@@ -50,6 +52,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.login:
                 Intent intent = new Intent(getContext(),LoginActivity.class);
                 startActivity(intent);
+                break;
+            case R.id.collection:
+                Intent intent1 = new Intent(getContext(),CollectionActivity.class);
+                startActivity(intent1);
                 break;
 
         }
