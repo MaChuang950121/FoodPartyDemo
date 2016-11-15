@@ -122,7 +122,7 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
             Intent intent = new Intent(getContext(),LibraryNextActivity.class);
             intent.putExtra("name",bean.getName());
             intent.putExtra("value",bean.getId());
-            intent.putExtra("group","brand");
+            intent.putExtra("group","group");
             ArrayList<String> brBean = new ArrayList<String>();
             ArrayList<Integer> idBrBean = new ArrayList<Integer>();
             for (int j = 0; j < bean.getSub_category_count(); j++) {

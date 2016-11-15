@@ -29,9 +29,7 @@ import lanou.foodpartydemo.tools.OnRecyclerItemClickListener;
 import lanou.foodpartydemo.tools.UrlValues;
 import lanou.foodpartydemo.tools.VolleySingle;
 
-/**
- * Created by dllo on 16/11/4.
- */
+
 public class LibraryNextActivity extends BaseActivity implements  View.OnClickListener, AdapterView.OnItemClickListener, OnRecyclerItemClickListener {
 
     private TextView titleKind;
@@ -156,21 +154,27 @@ public class LibraryNextActivity extends BaseActivity implements  View.OnClickLi
 
     @Override
     protected void initViews() {
-        titleKind = (TextView) findViewById(R.id.title_kind);
-        listView = (ListView) findViewById(R.id.lv_library_next);
-        all = (ImageView) findViewById(R.id.iv_all);
+//        titleKind = (TextView) findViewById(R.id.title_kind);
+        titleKind = bindView(R.id.title_kind);
+//        listView = (ListView) findViewById(R.id.lv_library_next);
+        listView = bindView(R.id.lv_library_next);
+//        all = (ImageView) findViewById(R.id.iv_all);
+        all = bindView(R.id.iv_all);
         view = LayoutInflater.from(this).inflate(R.layout.pop,null);
         order = LayoutInflater.from(this).inflate(R.layout.order_pop,null);
         lvAll = (ListView) view.findViewById(R.id.lv_pop);
         recyclerView = (RecyclerView) order.findViewById(R.id.rv_order);
-        nutritionOrder = (TextView) findViewById(R.id.nutrition_order);
-        back = (ImageView) findViewById(R.id.library_next_back);
+//        nutritionOrder = (TextView) findViewById(R.id.nutrition_order);
+        nutritionOrder = bindView(R.id.nutrition_order);
+//        back = (ImageView) findViewById(R.id.library_next_back);
+        back = bindView(R.id.library_next_back);
         tvALL = bindView(R.id.tv_all);
-        nutritionOrder.setOnClickListener(this);
-        all.setOnClickListener(this);
+//        nutritionOrder.setOnClickListener(this);
+//        all.setOnClickListener(this);
+//        back.setOnClickListener(this);
         lvAll.setOnItemClickListener(this);
-        back.setOnClickListener(this);
 
+        setOnClick(this,nutritionOrder,all,back);
 
 
     }

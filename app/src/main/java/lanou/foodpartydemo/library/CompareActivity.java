@@ -47,10 +47,11 @@ public class CompareActivity extends BaseActivity implements View.OnClickListene
     private String rightCode;
     private CompareAdapter compareAdapter;
     private RecyclerView recyclerView;
+    private ImageView back;
 
     @Override
     protected void initData() {
-        setOnClick(this,compareLeft,compareRight);
+        setOnClick(this,compareLeft,compareRight,back);
         compareAdapter = new CompareAdapter();
     }
 
@@ -120,6 +121,7 @@ public class CompareActivity extends BaseActivity implements View.OnClickListene
         leftClear = bindView(R.id.compare_leftclear);
         rightClear = bindView(R.id.compare_rightclear);
         recyclerView = bindView(R.id.compare_rv);
+        back = bindView(R.id.compare_return);
     }
 
     @Override
@@ -134,6 +136,9 @@ public class CompareActivity extends BaseActivity implements View.OnClickListene
                 Intent intent1 = new Intent(CompareActivity.this,SearchActivity.class);
                 startActivityForResult(intent1,RESULT_CODE);
                 place = "right";
+                break;
+            case R.id.compare_return:
+                onBackPressed();
                 break;
         }
     }
