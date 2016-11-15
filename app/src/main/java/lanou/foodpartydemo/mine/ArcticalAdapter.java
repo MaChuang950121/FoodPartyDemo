@@ -24,6 +24,7 @@ public class ArcticalAdapter extends RecyclerView.Adapter<CommonVH>{
 
     public void setArrayList(ArrayList<CollectionSqlBean> arrayList) {
         this.arrayList = arrayList;
+        notifyDataSetChanged();
     }
 
     @Override

@@ -22,11 +22,7 @@
         android:name=".base.MyApp"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity" android:theme="@style/CustomTitle">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
         </activity>
         <activity android:name=".homepage.WebActivity" android:theme="@style/CustomTitle"/>
         <activity android:name=".library.LibraryNextActivity" android:theme="@style/CustomTitle"/>
@@ -37,6 +33,13 @@
             android:launchMode="singleTask"
             />
         <activity android:name=".mine.CollectionActivity" android:theme="@style/CustomTitle"/>
+        <activity android:name=".StartActivity" android:theme="@style/CustomTitle">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
     </application>
 
 </manifest>

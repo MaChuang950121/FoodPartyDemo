@@ -16,6 +16,8 @@ import android.widget.TextView;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 
+import org.w3c.dom.Text;
+
 import java.util.ArrayList;
 
 import lanou.foodpartydemo.R;
@@ -52,19 +54,17 @@ public class LibraryNextActivity extends BaseActivity implements  View.OnClickLi
     private String group;
     private ImageView back;
    private String ntOder;
-
+    private TextView tvALL;
 
 
     @Override
     protected void initData() {
         String name = getIntent().getStringExtra("name");
         kind = getIntent().getStringArrayListExtra("kind");
-        Log.d("LibraryNextActivity", "kind:" + kind);
         id = getIntent().getIntegerArrayListExtra("id");
         value = getIntent().getStringExtra("value");
         group = getIntent().getStringExtra("group");
         titleKind.setText(name);
-        Log.d("LibraryNextActivity", value);
         libraryNextAdapter = new LibraryNextAdapter(this);
         GsonRequest<LibraryNextBean> gsonRequestAll = new GsonRequest<LibraryNextBean>(LibraryNextBean.class,
                 "http://food.boohee.com/fb/v1/foods?kind="+group+"&value=" + value + "&order_by=1&page=1&order_asc=0",
@@ -104,7 +104,8 @@ public class LibraryNextActivity extends BaseActivity implements  View.OnClickLi
 
 
                 GsonRequest<LibraryNextBean> gsonRequestOrder = new GsonRequest<LibraryNextBean>(LibraryNextBean.class,
-                        "http://food.boohee.com/fb/v1/foods?kind=" + group + "&value=" + value + "&order_by=" + ntOder + "&page="+page+"&order_asc=0",
+                        "http://food.boohee.com/fb/v1/foods?kind=" + group + "&value=" + value +
+                                "&order_by=" + ntOder + "&page="+page+"&order_asc=0",
                         new Response.Listener<LibraryNextBean>() {
                             @Override
                             public void onResponse(LibraryNextBean response) {
@@ -164,6 +165,7 @@ public class LibraryNextActivity extends BaseActivity implements  View.OnClickLi
         recyclerView = (RecyclerView) order.findViewById(R.id.rv_order);
         nutritionOrder = (TextView) findViewById(R.id.nutrition_order);
         back = (ImageView) findViewById(R.id.library_next_back);
+        tvALL = bindView(R.id.tv_all);
         nutritionOrder.setOnClickListener(this);
         all.setOnClickListener(this);
         lvAll.setOnItemClickListener(this);
@@ -199,6 +201,9 @@ public class LibraryNextActivity extends BaseActivity implements  View.OnClickLi
             popupWindow.dismiss();
         }
         subValue = id.get(i);
+
+        String str = (String) adapterView.getItemAtPosition(i);
+       tvALL.setText(str);
         GsonRequest<LibraryNextBean> gsonRequest = new GsonRequest<LibraryNextBean>(LibraryNextBean.class
                 , "http://food.boohee.com/fb/v1/foods?kind="+group+"&value="+value+"(&sub_value="
                 + subValue + ")&order_by=1&page=1&order_asc=0", new Response.Listener<LibraryNextBean>() {
@@ -247,7 +252,7 @@ public class LibraryNextActivity extends BaseActivity implements  View.OnClickLi
                 recyclerView.setAdapter(orderPopAdapter);
                 GridLayoutManager manager = new GridLayoutManager(LibraryNextActivity.this,3);
                 recyclerView.setLayoutManager(manager);
-//                Log.d("LibraryNextActivity", "response.getTypes():" + response.getTypes());
+
             }
         }, new Response.ErrorListener() {
             @Override
@@ -268,7 +273,7 @@ public class LibraryNextActivity extends BaseActivity implements  View.OnClickLi
     @Override
     public void onItemClick(int position, String order) {
        ntOder = order;
-
+        nutritionOrder.setText(orderPopAdapter.arrayList.get(position).getName());
         GsonRequest<LibraryNextBean> gsonRequest = new GsonRequest<LibraryNextBean>(LibraryNextBean.class
                 , "http://food.boohee.com/fb/v1/foods?kind="+group+"&value="+value+"&order_by="+order+"&page=1&order_asc=0",
                 new Response.Listener<LibraryNextBean>() {
@@ -284,6 +289,7 @@ public class LibraryNextActivity extends BaseActivity implements  View.OnClickLi
         });
         VolleySingle.getVolleySingle().addRequest(gsonRequest);
     }
+
 
 
 }

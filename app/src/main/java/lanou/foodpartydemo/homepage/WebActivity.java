@@ -1,6 +1,9 @@
 package lanou.foodpartydemo.homepage;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
@@ -34,6 +37,7 @@ public class WebActivity extends AppCompatActivity {
     private ImageView ivCollection;
     private String url;
     private String title;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -85,12 +89,15 @@ public class WebActivity extends AppCompatActivity {
                         ivCollection.setImageBitmap(bitmap);
                         tvCollection.setText("已收藏");
 
+
                     }else if (tvCollection.getText().toString().equals("已收藏")){
                         Bitmap bitmap = BitmapFactory.decodeResource(getResources(),R.mipmap.ic_favorate_unchecked);
                         ivCollection.setImageBitmap(bitmap);
                         tvCollection.setText("收藏");
                         DBTool dbTool = new DBTool();
                         dbTool.deleteWebCollect(url);
+                        Intent intent = new Intent("lanou.foodpartydemo.homepage");
+                        sendBroadcast(intent);
 
 //                        dbTool.deleteAllData(CollectionSqlBean.class);
 
@@ -107,4 +114,6 @@ public class WebActivity extends AppCompatActivity {
         finish();
         return super.onSupportNavigateUp();
     }
+
+
 }
