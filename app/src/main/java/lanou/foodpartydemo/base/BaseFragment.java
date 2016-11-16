@@ -42,23 +42,24 @@ public abstract class BaseFragment extends Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView();
-        addFragmentArrayList();
-
-        addAdapter();
+        initData();
+//        addFragmentArrayList();
+//
+//        addAdapter();
     }
     
 
-    protected abstract void addAdapter();
+//    protected abstract void addAdapter();
     protected abstract void initData();
 
-    protected abstract void addFragmentArrayList();
+//    protected abstract void addFragmentArrayList();
 
 
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        initData();
+
     }
 
 

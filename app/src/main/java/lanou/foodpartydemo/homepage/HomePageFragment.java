@@ -18,8 +18,19 @@ public class HomePageFragment extends BaseFragment {
     private ViewPager viewPager;
     private ArrayList<Fragment> arrayList;
 
+//    @Override
+//    protected void addAdapter() {
+//
+//
+//    }
+
     @Override
-    protected void addAdapter() {
+    protected void initData() {
+        arrayList = new ArrayList<>();
+        bindFragment(arrayList,new FirstPageFragment());
+        bindFragment(arrayList,new TestFragment());
+        bindFragment(arrayList,new KnowledgeFragment());
+        bindFragment(arrayList,new FoodFragment());
         HomePageAdapter adapter = new HomePageAdapter(getChildFragmentManager());
         adapter.setFragments(arrayList);
         viewPager.setAdapter(adapter);
@@ -27,19 +38,10 @@ public class HomePageFragment extends BaseFragment {
 
     }
 
-    @Override
-    protected void initData() {
-
-    }
-
-    @Override
-    protected void addFragmentArrayList() {
-        arrayList = new ArrayList<>();
-        bindFragment(arrayList,new FirstPageFragment());
-        bindFragment(arrayList,new TestFragment());
-        bindFragment(arrayList,new KnowledgeFragment());
-        bindFragment(arrayList,new FoodFragment());
-    }
+//    @Override
+//       protected void addFragmentArrayList() {
+//
+//    }
 
 
 

@@ -27,10 +27,10 @@ public class ArcticalFragment extends BaseFragment{
     private DBTool dbTool;
 
 
-    @Override
-    protected void addAdapter() {
-
-    }
+//    @Override
+//    protected void addAdapter() {
+//
+//    }
 
     @Override
     protected void initData() {
@@ -67,10 +67,10 @@ public class ArcticalFragment extends BaseFragment{
 
     }
 
-    @Override
-    protected void addFragmentArrayList() {
-
-    }
+////    @Override
+//    protected void addFragmentArrayList() {
+//
+//    }
 
     @Override
     protected void initView() {

@@ -47,11 +47,11 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
     private ImageView compare;
 
 
-    @Override
-    protected void addAdapter() {
-
-
-    }
+//    @Override
+//    protected void addAdapter() {
+//
+//
+//    }
 
     @Override
     protected void initData() {
@@ -94,10 +94,10 @@ public class LibraryFragment extends BaseFragment implements View.OnClickListene
 
 
         }
-    @Override
-    protected void addFragmentArrayList() {
-
-    }
+//    @Override
+//    protected void addFragmentArrayList() {
+//
+//    }
 
     @Override
     public void onClick(View view) {

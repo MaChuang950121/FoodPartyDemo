@@ -39,10 +39,10 @@ public class FirstPageFragment extends BaseFragment {
         this.context = context;
     }
 
-    @Override
-    protected void addAdapter() {
-
-    }
+//    @Override
+//    protected void addAdapter() {
+//
+//    }
 
     @Override
     protected void initData() {
@@ -77,11 +77,11 @@ public class FirstPageFragment extends BaseFragment {
             }
         });
     }
-
-    @Override
-    protected void addFragmentArrayList() {
-
-    }
+//
+//    @Override
+//    protected void addFragmentArrayList() {
+//
+//    }
     public void getGson(String url, final boolean isRefresh) {
         GsonRequest<FirstPageBean> gsonRequest = new GsonRequest<FirstPageBean>(FirstPageBean.class,
                 url, new Response.Listener<FirstPageBean>() {

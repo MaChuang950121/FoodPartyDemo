@@ -23,10 +23,10 @@ public class KnowledgeFragment extends BaseFragment implements OnRecyclerItemCli
     private RecyclerView recyclerView;
     private MyAdapter adapter;
     private int page = 2;
-    @Override
-    protected void addAdapter() {
-
-    }
+//    @Override
+//    protected void addAdapter() {
+//
+//    }
 
     @Override
     protected void initData() {
@@ -62,10 +62,10 @@ public class KnowledgeFragment extends BaseFragment implements OnRecyclerItemCli
         VolleySingle.getVolleySingle().addRequest(gsonRequest);
     }
 
-    @Override
-    protected void addFragmentArrayList() {
-
-    }
+//    @Override
+//    protected void addFragmentArrayList() {
+//
+//    }
 
     @Override
     protected void initView() {

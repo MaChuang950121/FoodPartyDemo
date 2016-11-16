@@ -30,10 +30,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private ImageView setting;
 
 
-    @Override
-    protected void addAdapter() {
-
-    }
+//    @Override
+//    protected void addAdapter() {
+//
+//    }
 
     @Override
     protected void initData() {
@@ -57,10 +57,19 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         setItemOnClick(this,btnLogIn,collection,setting);
     }
 
-    @Override
-    protected void addFragmentArrayList() {
+//    @Override
+//    protected void addFragmentArrayList() {
+//
+//    }
 
-    }
+
+//    @Override
+//    public void onResume() {
+//        super.onResume();
+//        btnLogIn.setVisibility(View.VISIBLE);
+//        maNameTv.setVisibility(View.GONE);
+//        myDataBtn.setVisibility(View.GONE);
+//    }
 
     @Override
     protected void initView() {
@@ -100,10 +109,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (data == null) {
+            btnLogIn.setVisibility(View.VISIBLE);
+            maNameTv.setVisibility(View.GONE);
+            myDataBtn.setVisibility(View.GONE);
+            userIcon.setImageResource(R.mipmap.ic_analyse_default);
             return;
-        }
-        Log.d("MyFragment", "resultCode:" + resultCode);
-        if (requestCode == 1 && LoginActivity.RESULT == resultCode) {
+        }else if (requestCode == 1 && LoginActivity.RESULT == resultCode) {
             String name = data.getStringExtra("name");
             Log.d("MyFragment123", name);
             String icon = data.getStringExtra("icon");

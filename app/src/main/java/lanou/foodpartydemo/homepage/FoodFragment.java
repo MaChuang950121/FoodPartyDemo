@@ -24,10 +24,10 @@ public class FoodFragment extends BaseFragment implements OnRecyclerItemClickLis
     private MyAdapter adapter;
     private int page = 2;
 
-    @Override
-    protected void addAdapter() {
-
-    }
+//    @Override
+//    protected void addAdapter() {
+//
+//    }
 
     @Override
     protected void initData() {
@@ -63,10 +63,10 @@ public class FoodFragment extends BaseFragment implements OnRecyclerItemClickLis
         });
         VolleySingle.getVolleySingle().addRequest(gsonRequest);
     }
-    @Override
-    protected void addFragmentArrayList() {
-
-    }
+//    @Override
+//    protected void addFragmentArrayList() {
+//
+//    }
 
     @Override
     protected void initView() {

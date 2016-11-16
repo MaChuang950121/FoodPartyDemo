@@ -33,10 +33,10 @@ public class TestFragment extends BaseFragment implements OnRecyclerItemClickLis
 
     private RecyclerView recyclerView;
 
-    @Override
-    protected void addAdapter() {
-
-    }
+//    @Override
+//    protected void addAdapter() {
+//
+//    }
 
     @Override
     protected void initData() {
@@ -72,11 +72,11 @@ public class TestFragment extends BaseFragment implements OnRecyclerItemClickLis
         });
         VolleySingle.getVolleySingle().addRequest(gsonRequest);
     }
-
-    @Override
-    protected void addFragmentArrayList() {
-
-    }
+//
+//    @Override
+//    protected void addFragmentArrayList() {
+//
+//    }
 
     @Override
     protected void initView() {
