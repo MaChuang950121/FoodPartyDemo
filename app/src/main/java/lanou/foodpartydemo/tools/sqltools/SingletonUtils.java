@@ -12,7 +12,6 @@ import java.util.concurrent.TimeUnit;
 import lanou.foodpartydemo.base.MyApp;
 
 /**
- * Created by XiaoyuLu on 16/10/29.
  *
  * 单例实现 线程池, LiteOrm 数据库, Handler的初始化
  */

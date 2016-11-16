@@ -8,12 +8,12 @@ import com.litesuits.orm.LiteOrm;
 import com.litesuits.orm.db.assit.WhereBuilder;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.concurrent.ThreadPoolExecutor;
 
 import lanou.foodpartydemo.bean.CollectionSqlBean;
 
 /**
- * Created by XiaoyuLu on 16/10/29.
  *
  *  区分 Class<T> 与 T 的关系与区别
  */
@@ -109,6 +109,7 @@ public class DBTool {
 
         threadPoolExecutor.execute(new QueryRunnable<>(tClass, onQueryListener));
     }
+
 
     /** 实现 查询数据库的  外层 Runnable 泛型 类 */
     private class QueryRunnable<T> implements Runnable{

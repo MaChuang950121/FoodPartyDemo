@@ -28,6 +28,10 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
     private TextView myDataBtn;
     private ImageView userIcon;
     private ImageView setting;
+    private TextView modifyUser;
+    private String name;
+    private String icon;
+
 
 
 //    @Override
@@ -41,8 +45,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         try {
 
             PlatformDb platformDb = qq.getDb();
-           String name = platformDb.getUserName();
-           String icon = platformDb.getUserIcon();
+            name = platformDb.getUserName();
+            icon = platformDb.getUserIcon();
 
             if (!TextUtils.isEmpty(name)) {
                 btnLogIn.setVisibility(View.GONE);
@@ -54,7 +58,7 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         } catch (NullPointerException e) {
 
         }
-        setItemOnClick(this,btnLogIn,collection,setting);
+        setItemOnClick(this,btnLogIn,collection,setting,modifyUser);
     }
 
 //    @Override
@@ -79,6 +83,8 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
         myDataBtn = bindView(R.id.modify_user);
         userIcon = bindView(R.id.user_icon);
         setting = bindView(R.id.iv_setting);
+        modifyUser = bindView(R.id.modify_user);
+
 
     }
 
@@ -101,6 +107,12 @@ public class MineFragment extends BaseFragment implements View.OnClickListener {
             case R.id.iv_setting:
                 Intent intent2  = new Intent(getContext(),SettingActivity.class);
                 startActivityForResult(intent2,1);
+                break;
+            case R.id.modify_user:
+                Intent intent3 = new Intent(getContext(),SettingMessageActivity.class);
+                intent3.putExtra("name",name);
+                intent3.putExtra("icon",icon);
+                startActivity(intent3);
                 break;
 
         }

@@ -9,12 +9,14 @@ import java.util.List;
 import lanou.foodpartydemo.R;
 import lanou.foodpartydemo.tools.CommonVH;
 import lanou.foodpartydemo.tools.OnRecyclerItemClickListener;
+import lanou.foodpartydemo.tools.sqltools.HistorySqlData;
 
 /**
  * Created by dllo on 16/11/10.
  */
 public class RecentAdapter extends RecyclerView.Adapter<CommonVH> {
     List<String> list;
+
     OnRecyclerItemClickListener onRecyclerItemClickListener;
 
     public void setOnRecyclerItemClickListener(OnRecyclerItemClickListener onRecyclerItemClickListener) {
@@ -25,6 +27,9 @@ public class RecentAdapter extends RecyclerView.Adapter<CommonVH> {
         this.list = list;
         notifyDataSetChanged();
     }
+
+
+
 
     @Override
     public CommonVH onCreateViewHolder(ViewGroup parent, int viewType) {

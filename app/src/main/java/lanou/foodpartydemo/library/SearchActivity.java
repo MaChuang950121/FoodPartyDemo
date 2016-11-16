@@ -32,6 +32,8 @@ import lanou.foodpartydemo.tools.GsonRequest;
 import lanou.foodpartydemo.tools.OnRecyclerItemClickListener;
 import lanou.foodpartydemo.tools.UrlValues;
 import lanou.foodpartydemo.tools.VolleySingle;
+import lanou.foodpartydemo.tools.sqltools.DBTool;
+import lanou.foodpartydemo.tools.sqltools.HistorySqlData;
 
 /**
  * Created by dllo on 16/11/9.
@@ -61,6 +63,14 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
         setOnClick(this,back,search,delete,deleteAll);
         adapter = new SearchAdapter();
         recentAdapter = new RecentAdapter();
+        rcmanager = new LinearLayoutManager(this);
+        DBTool dbTool = new DBTool();
+        dbTool.queryAllData(HistorySqlData.class, new DBTool.OnQueryListener<HistorySqlData>() {
+            @Override
+            public void onQuery(ArrayList<HistorySqlData> historySqlDatas) {
+
+            }
+        });
         linearManager = new LinearLayoutManager(this);
         final GridLayoutManager gridLayoutManager = new GridLayoutManager(this,2);
         everyOneSearchAdapter = new EveryOneSearchAdapter();
@@ -156,6 +166,14 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
                         }
                     }
+                    for (String string:list
+                         ) {
+                        DBTool dbTool = new DBTool();
+                        HistorySqlData date = new HistorySqlData();
+                        date.setHistoryStr(string);
+                        dbTool.insert(string);
+                    }
+
                     Log.d("SearchActivity", "list:" + list);
 
                     GsonRequest<SearchBean> gsonRequest = new GsonRequest<SearchBean>(SearchBean.class,
@@ -216,13 +234,18 @@ public class SearchActivity extends BaseActivity implements View.OnClickListener
 
                 recentAdapter.setList(list);
                 rvSearch.setAdapter(recentAdapter);
-                rcmanager = new LinearLayoutManager(this);
                 rvSearch.setLayoutManager(rcmanager);
                 scrollView.setVisibility(View.VISIBLE);
                 recyclerView.setVisibility(View.GONE);
                 break;
             case R.id.delete_all:
                 list.clear();
+                for (String string:list
+                     ) {
+                    DBTool dbTool = new DBTool();
+                    dbTool.deleteHistoryByCondition(HistorySqlData.class,string);
+                }
+
                 recentAdapter.setList(list);
                 rvSearch.setAdapter(recentAdapter);
                 rvSearch.setLayoutManager(rcmanager);

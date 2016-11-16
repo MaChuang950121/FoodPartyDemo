@@ -73,6 +73,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".mine.SettingActivity" android:theme="@style/CustomTitle"/>
+        <activity android:name=".mine.ModifyUserActivity" android:theme="@style/CustomTitle"/>
+        <activity android:name=".mine.SettingMessageActivity" android:theme="@style/CustomTitle"/>
+
     </application>
 
 </manifest>
