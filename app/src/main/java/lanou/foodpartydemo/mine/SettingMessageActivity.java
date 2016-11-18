@@ -18,9 +18,7 @@ import java.util.Arrays;
 import lanou.foodpartydemo.base.BaseActivity;
 import lanou.foodpartydemo.tools.VolleySingle;
 
-/**
- * Created by dllo on 16/11/14.
- */
+
 public class SettingMessageActivity extends BaseActivity  implements View.OnClickListener{
 
     private RelativeLayout setSex;

@@ -67,6 +67,7 @@
             android:id="@+id/setting_user_icon"
             android:layout_toLeftOf="@id/back"
             android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
             />
     </RelativeLayout>
     <RelativeLayout
@@ -98,7 +99,8 @@
             android:id="@+id/setting_user_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:padding="20dp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
             android:textSize="15dp"
             android:layout_alignParentRight="true"
             android:layout_marginRight="30dp"
